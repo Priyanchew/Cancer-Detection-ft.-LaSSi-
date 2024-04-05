@@ -15,9 +15,7 @@ CancerGuard is an innovative project developed during the XYZ Hackathon by Team 
 - **Programming Languages**: Python
 - **Framework**: Streamlit
 - **Machine Learning Libraries**: TensorFlow, scikit-learn
-- **Data Storage**: PostgreSQL
-- **APIs**: Google Cloud API, Health data APIs
-- **Tools**: Git, Docker
+- **Tools**: Git,Jupyter,Anaconda
 
 ## Installation
 1. Clone the repository:
