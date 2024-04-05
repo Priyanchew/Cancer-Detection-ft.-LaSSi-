@@ -37,7 +37,7 @@ We welcome contributions from the community to further enhance CancerGuard's cap
 - Jaskaran Singh Taneja
 - Priyanshu Choudhary
 - Pratyush Dube
-- Ayuush Behara
+- Ayush Behera
 
 ## License
 This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
