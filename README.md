@@ -1,4 +1,4 @@
-# CancerGuard: Early Detection and Prevention System
+# Early Detection and Prevention System
 
 ## Overview
 CancerGuard is an innovative project developed during the XYZ Hackathon by Team LaSSi. It is a comprehensive system aimed at early detection and prevention of cancer through advanced data analysis and machine learning algorithms. The system utilizes various data sources and cutting-edge technology to provide users with personalized insights and recommendations to mitigate cancer risks.
