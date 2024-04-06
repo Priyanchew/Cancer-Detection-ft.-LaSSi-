@@ -10,6 +10,7 @@ import cv2
 from tensorflow import keras
 import numpy as np
 import pandas as pd
+from PIL import Image
 
 # Measure Latency
 
@@ -17,7 +18,7 @@ import pandas as pd
 #192.168.18.6:8501
 
 # Load TensorFlow Lite model
-interpreter = tf.lite.Interpreter(model_path=r"C:\Users\priya\OneDrive\Desktop\CANCER\streamlit-cancer-predict-main\streamlit-cancer-predict-main\InceptionResNetV2Skripsi.tflite")
+interpreter = tf.lite.Interpreter(model_path=r"C:\Users\jaska\AppData\Local\GitHubDesktop\app-3.3.5\CANCER-ft.-LaSSi\InceptionResNetV2Skripsi.tflite")
 interpreter.allocate_tensors()
 
 # Get input and output tensors
@@ -31,6 +32,17 @@ def resize_image(image):
     return resized_image.numpy()
 
 # Define a function to run inference on the TensorFlow Lite model
+
+def brain_image(image):
+  labels2 = ['glioma_tumor', 'no_tumor', 'meningioma_tumor', 'pituitary_tumor']
+  image = np.array(Image.open(image).convert("RGB"))
+  image=cv2.resize(image,(150,150))
+  reshaped_image = image.reshape((1, 150, 150, 3)) 
+  loaded_model = keras.models.load_model(r"C:\Users\jaska\AppData\Local\GitHubDesktop\app-3.3.5\CANCER-ft.-LaSSi\effnet.keras")
+  new_pred=loaded_model.predict(reshaped_image)
+  max_index = np.argmax(new_pred)
+  column_number = max_index % new_pred.shape[1]
+  return(labels2[column_number])
 def classify_image(image):
     # Pre-process the input image
     resized_image = resize_image(image)
@@ -57,7 +69,7 @@ labels = ['akiec', 'bcc', 'bkl', 'df', 'mel', 'nv', 'vasc']
 from PIL import Image
 
 def get_clean_data():
-  data = pd.read_csv(r"C:\Users\priya\OneDrive\Desktop\CANCER\streamlit-cancer-predict-main\streamlit-cancer-predict-main\data\data.csv")
+  data = pd.read_csv(r"C:\Users\jaska\AppData\Local\GitHubDesktop\app-3.3.5\CANCER-ft.-LaSSi\data\data.csv")
   
   data = data.drop(['Unnamed: 32', 'id'], axis=1)
   
@@ -190,8 +202,8 @@ def get_radar_chart(input_data):
 
 
 def add_predictions(input_data):
-  model = pickle.load(open(r"C:\Users\priya\OneDrive\Desktop\CANCER\streamlit-cancer-predict-main\streamlit-cancer-predict-main\model\model.pkl", "rb"))
-  scaler = pickle.load(open(r"C:\Users\priya\OneDrive\Desktop\CANCER\streamlit-cancer-predict-main\streamlit-cancer-predict-main\model\scaler.pkl", "rb"))
+  model = pickle.load(open(r"C:\Users\jaska\AppData\Local\GitHubDesktop\app-3.3.5\CANCER-ft.-LaSSi\model\model.pkl", "rb"))
+  scaler = pickle.load(open(r"C:\Users\jaska\AppData\Local\GitHubDesktop\app-3.3.5\CANCER-ft.-LaSSi\model\scaler.pkl", "rb"))
   
   input_array = np.array(list(input_data.values())).reshape(1, -1)
   
@@ -225,7 +237,7 @@ def main():
     tabs = st.tabs(["Breast", "Lung", "Skin", "Brain", "Blood"])
 
     with open(
-            r"C:\Users\priya\OneDrive\Desktop\CANCER\streamlit-cancer-predict-main\streamlit-cancer-predict-main\assets\style.css") as f:
+            r"C:\Users\jaska\AppData\Local\GitHubDesktop\app-3.3.5\CANCER-ft.-LaSSi\assets\style.css") as f:
         st.markdown("<style>{}</style>".format(f.read()), unsafe_allow_html=True)
 
     with tabs[0]:
@@ -307,7 +319,7 @@ def main():
 
     with tabs[3]:  # Brain Cancer
         st.title("Brain Cancer Classification")
-        labels2 = ['glioma_tumor', 'no_tumor', 'meningioma_tumor', 'pituitary_tumor']
+
         st.write(
             "The application allows users to quickly and easily check for signs of Brain cancer from the comfort of their own homes. It's important to note that the application is not a substitute for medical advice, but rather a tool to help users identify potential issues and seek professional help if necessary. Heres the overview:")
         st.write("1.	The user is prompted to upload an image of a MRI Scan.")
@@ -335,18 +347,9 @@ def main():
         image1 = st.file_uploader("Upload an image", type=["jpg", "jpeg", "png"],key="file_uploader_1")
         # Show the input image
         if image1 is not None:
-            image_bytes = image1.read()
-            image1 = cv2.imdecode(np.frombuffer(image_bytes, np.uint8), cv2.IMREAD_COLOR)
-            image1 = cv2.resize(image1,(150, 150))
-            image1 = np.expand_dims(image1, axis=0)
+          st.write(brain_image(image1))
 
-            # Run inference on the input image
-        loaded_model = keras.models.load_model(r"C:\Users\priya\OneDrive\Desktop\CANCER\streamlit-cancer-predict-main\streamlit-cancer-predict-main\effnet.keras")
-        new_pred = loaded_model.predict(image1)
-        max_index = np.argmax(new_pred)
-        column_number = max_index % new_pred.shape[1]
-
-        st.write(labels2[column_number])
+        st.write()
 
 
 
