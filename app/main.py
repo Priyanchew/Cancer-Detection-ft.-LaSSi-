@@ -229,12 +229,12 @@ def add_predictions(input_data):
 
 def main():
     st.set_page_config(
-            page_title="Breast Cancer Predictor",
+            page_title="Cancer Predictor",
             page_icon=":female-doctor:",
             layout="wide",
             initial_sidebar_state="expanded"
     )
-    tabs = st.tabs(["Breast", "Lung", "Skin", "Brain", "Blood"])
+    tabs = st.tabs(["Breast",  "Brain","Skin", "Lung", "Blood"])
 
     with open(
             r"C:\Users\jaska\AppData\Local\GitHubDesktop\app-3.3.5\CANCER-ft.-LaSSi\assets\style.css") as f:
@@ -255,11 +255,11 @@ def main():
       with col2:
         add_predictions(input_data)
 
-    with tabs[1]:  # Lung Cancer
+    with tabs[3]:  # Lung Cancer
         with st.container():
             st.title("Lung Cancer Predictor")
-        st.write("Information about lung cancer, including symptoms, diagnosis, and treatment options.")
-        st.markdown("[Learn more about Lung Cancer](Lung Cancer Resource URL)")  # Replace with actual URL
+        st.header("Stay Tuned!")
+        st.write("We appreciate your patience. We'll keep you updated on the progress of this feature. In the meantime, feel free to explore the other functionalities of our app.")
 
         
     with tabs[2]:  # Skin Cancer
@@ -317,7 +317,7 @@ def main():
             st.write(latency[0])
 
 
-    with tabs[3]:  # Brain Cancer
+    with tabs[1]:  # Brain Cancer
         st.title("Brain Cancer Classification")
 
         st.write(
@@ -355,8 +355,8 @@ def main():
 
     with tabs[4]:  # Blood Cancer
         st.subheader("Blood Cancer")
-        st.write("Information about blood cancer, including symptoms, diagnosis, and treatment options.")
-        st.markdown("[Learn more about Blood Cancer](Blood Cancer Resource URL)")
+        st.header("Stay Tuned!")
+        st.write("We appreciate your patience. We'll keep you updated on the progress of this feature. In the meantime, feel free to explore the other functionalities of our app.")
 
 
  
